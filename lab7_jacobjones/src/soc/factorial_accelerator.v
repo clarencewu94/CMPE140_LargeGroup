@@ -7,7 +7,15 @@ module factorial_accelerator(
         output wire RD
     );
 
-
+    factorial #(4) factorial (
+        .rst(reset),
+        .clk(clk),
+        .Go(),
+        .n(),
+        .Done(),
+        .Error(),
+        .product()
+    );
 
 
 endmodule

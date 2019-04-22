@@ -76,7 +76,7 @@ module mips_top (
         .clk(clk),
         .reset(rst),
         .A(alu_out[3:2]),
-        .WE1(WE1),
+        .WE(WE1),
         .WD(wd_dm[3:0]),
         .RD(RdFA)
     );

@@ -2,7 +2,10 @@ main:
     # factorial
     addi $a0, $zero, 0x1
     sw $a0, 0x0($zero)
+    lw $a1, 0x0($zero)
     sw $a0, 0x4($zero)
+    lw $a1, 0x4($zero)
+    # add loop until done here
     lw $a1, 0x8($zero)
     lw $a1, 0xc($zero)
 
@@ -16,5 +19,5 @@ main:
 
     # Data Memory
     sw $a0, 0x20($zero)
-    lw $a1, 0x2c($zero)
+    lw $a1, 0x20($zero)
 end:

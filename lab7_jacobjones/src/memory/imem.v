@@ -6,7 +6,7 @@ module imem (
     reg [31:0] rom [0:63];
 
     initial begin
-        $readmemh ("lab7_memfile.dat", rom);
+        $readmemh ("lab8_gpio_memfile.dat", rom);
     end
 
     assign y = rom[a];

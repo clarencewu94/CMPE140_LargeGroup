@@ -43,6 +43,13 @@ module tb_mips_top;
     wire [31:0] alu_out_hi = DUT.mips.dp.alu_out_hi;
 
 
+    // --- SOC -- //
+    wire WE1 = DUT.WE1;
+    wire WE2 = DUT.WE2;
+    wire WEM = DUT.WEM;
+    wire [1:0] RdSel = DUT.RdSel;
+
+
     integer error_count = 0;
     integer a, b;
     reg [63:0] expected_product;

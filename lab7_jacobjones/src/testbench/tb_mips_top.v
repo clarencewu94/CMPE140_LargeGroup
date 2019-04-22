@@ -48,6 +48,11 @@ module tb_mips_top;
     wire WE2 = DUT.WE2;
     wire WEM = DUT.WEM;
     wire [1:0] RdSel = DUT.RdSel;
+    wire [31:0] RdGPIO = DUT.RdGPIO;
+    // --- GPIO --- //
+    wire gpio_WE1 = DUT.gpio.WE1;
+    wire gpio_WE2 = DUT.gpio.WE2;
+    wire [1:0] gpio_RdSel = DUT.gpio.RdSel;
 
 
     integer error_count = 0;

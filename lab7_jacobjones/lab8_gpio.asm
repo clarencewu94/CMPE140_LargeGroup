@@ -7,9 +7,11 @@ main:
     lw $a1, 0xc($zero)
 
     # gpio
-    sw $a0, 0x10($zero)
-    sw $a0, 0x14($zero)
+    lw $a1, 0x10($zero)
+    lw $a1, 0x14($zero)
+    sw $a0, 0x18($zero)
     lw $a1, 0x18($zero)
+    sw $a0, 0x1c($zero)
     lw $a1, 0x1c($zero)
 
     # Data Memory

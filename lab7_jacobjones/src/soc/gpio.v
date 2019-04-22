@@ -2,12 +2,50 @@ module gpio(
         input wire clk,
         input wire reset,
         input wire [1:0] A,
-        input wire WE2,
+        input wire WE,
         input wire [31:0] WD,
-        output wire RD
+        input wire [31:0] gpi0,
+        input wire [31:0] gpi1,
+        output wire [31:0] RD
     );
 
+    wire WE1;
+    wire WE2;
+    wire [1:0] RdSel;
+    wire [31:0] gpo1_out;
+    wire [31:0] gpo2_out;
 
+    gpio_addr_dec gpio_addr_dec(
+        .WE(WE),
+        .A(A),
+        .WE1(WE1),
+        .WE2(WE2),
+        .RdSel(RdSel)
+    );
 
+    gpio_reg #(32) gpo1(
+        .clk(clk),
+        .rst(reset),
+        .D(WD),
+        .EN(WE1),
+        .Q(gpo1_out)
+    );
+
+    gpio_reg #(32) gpo2(
+        .clk(clk),
+        .rst(reset),
+        .D(WD),
+        .EN(WE2),
+        .Q(gpo2_out)
+    );
+
+    mux4 #(32) read_data_mux(
+        .sel(RdSel),
+        .in0(gpi0),
+        .in1(gpi1),
+        .in2(gpo1_out),
+        .in3(gpo2_out),
+        .out(RD)
+    );
 
 endmodule

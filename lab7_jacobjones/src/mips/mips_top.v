@@ -13,6 +13,15 @@ module mips_top (
         output wire [4:0] rf_wa
     );
 
+    // Move to input 
+    wire [31:0] gpi0;
+    wire [31:0] gpi1;
+    //TEST
+    reg [3:0] test_gpi0 = 4'b1010;
+    reg [3:0] test_gpi1 = 4'b0101;
+    assign gpi0 = {28'b0, test_gpi0};
+    assign gpi1 = {28'b0, test_gpi1};
+
     wire [31:0] DONT_USE;
     wire WE1;
     wire WE2;
@@ -21,6 +30,8 @@ module mips_top (
     wire [31:0] RdDM; 
     wire [31:0] RdFA; 
     wire [31:0] RdGPIO; 
+
+
 
     mips mips (
             .clk            (clk),
@@ -54,8 +65,10 @@ module mips_top (
         .clk(clk),
         .reset(rst),
         .A(alu_out[3:2]),
-        .WE2(WE2),
+        .WE(WE2),
         .WD(wd_dm),
+        .gpi0(gpi0),
+        .gpi1(gpi1),
         .RD(RdGPIO)
     );
 

@@ -2,6 +2,8 @@ main:
     # factorial
     addi $a0, $zero, 0x1
     addi $a2, $zero, 0x4
+    # load n from gpi0
+    lw $a2 0x10($zero)
     sw $a2, 0x0($zero)
     lw $a1, 0x0($zero)
     sw $a0, 0x4($zero)
@@ -14,6 +16,8 @@ fact_loop:
     beq $v1, $zero, fact_loop
 fact_end:
     lw $a1, 0xc($zero)
+    # output result on gpo0 
+    sw $a1, 0x18($zero)
 
     # gpio
     lw $a1, 0x10($zero)

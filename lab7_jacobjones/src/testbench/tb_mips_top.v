@@ -11,8 +11,10 @@ module tb_mips_top;
     wire [31:0] DONT_USE;
     wire [31:0] wd_rf;
     wire [4:0]  rf_wa;
-    reg [3:0]  gpi0_in;
-    reg [3:0]  gpi1_in;
+    reg [31:0]  gpi0;
+    reg [31:0]  gpi1;
+    wire [31:0] gpo0;
+    wire [31:0] gpo1;
     
     // Debug
     wire shift_mux_sel = DUT.mips.shift_mux_sel;
@@ -81,8 +83,10 @@ module tb_mips_top;
             .rst            (rst),
             .we_dm          (we_dm),
             .ra3            (5'b00000),
-            .gpi0_in        (gpi0_in),
-            .gpi1_in        (gpi1_in),
+            .gpi0           (gpi0),
+            .gpi1           (gpi1),
+            .gpo0           (gpo0),
+            .gpo1           (gpo1),
             .pc_current     (pc_current),
             .instr          (instr),
             .alu_out        (alu_mux_out),
@@ -202,8 +206,8 @@ module tb_mips_top;
     
     initial begin
         reset;
-        gpi0_in = 4'b1010;
-        gpi1_in = 4'b0110;
+        gpi0 = 32'b1010;
+        gpi1 = 32'b0110;
         // run_test;
         while(pc_current != 32'h58) 
         begin

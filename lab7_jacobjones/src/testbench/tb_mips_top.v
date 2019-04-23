@@ -11,6 +11,8 @@ module tb_mips_top;
     wire [31:0] DONT_USE;
     wire [31:0] wd_rf;
     wire [4:0]  rf_wa;
+    reg [3:0]  gpi0_in;
+    reg [3:0]  gpi1_in;
     
     // Debug
     wire shift_mux_sel = DUT.mips.shift_mux_sel;
@@ -49,10 +51,22 @@ module tb_mips_top;
     wire WEM = DUT.WEM;
     wire [1:0] RdSel = DUT.RdSel;
     wire [31:0] RdGPIO = DUT.RdGPIO;
+    wire [31:0] RdFA = DUT.RdFA;
     // --- GPIO --- //
     wire gpio_WE1 = DUT.gpio.WE1;
     wire gpio_WE2 = DUT.gpio.WE2;
     wire [1:0] gpio_RdSel = DUT.gpio.RdSel;
+    // --- Factorial --- //
+    wire [31:0] fact_product = DUT.factorial_accelerator.product;
+    wire [3:0] fact_n_out = DUT.factorial_accelerator.n_out;
+    wire x_gt_1 = DUT.factorial_accelerator.factorial.x_gt_1;
+    wire [31:0] out_CNT = DUT.factorial_accelerator.factorial.FACT_DP.out_CNT;
+    wire [31:0] n = DUT.factorial_accelerator.factorial.FACT_DP.n;
+    wire GoPulseOut = DUT.factorial_accelerator.GoPulseOut;
+    wire Done = DUT.factorial_accelerator.Done;
+    wire Err = DUT.factorial_accelerator.Err;
+    wire sel_MUX = DUT.factorial_accelerator.factorial.sel_MUX;
+    wire [2:0] fact_cs = DUT.factorial_accelerator.factorial.FACT_CU.CS;
 
 
     integer error_count = 0;
@@ -67,6 +81,8 @@ module tb_mips_top;
             .rst            (rst),
             .we_dm          (we_dm),
             .ra3            (5'b00000),
+            .gpi0_in        (gpi0_in),
+            .gpi1_in        (gpi1_in),
             .pc_current     (pc_current),
             .instr          (instr),
             .alu_out        (alu_mux_out),
@@ -186,6 +202,8 @@ module tb_mips_top;
     
     initial begin
         reset;
+        gpi0_in = 4'b1010;
+        gpi1_in = 4'b0110;
         // run_test;
         while(pc_current != 32'h58) 
         begin

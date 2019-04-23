@@ -61,11 +61,11 @@ module factorial_accelerator(
         .Q(n_out)
     );
 
-    factorial #(4) factorial (
+    factorial #(32) factorial (
         .rst(reset),
         .clk(clk),
         .Go(GoPulseOut),
-        .n(n_out),
+        .n(n_out_mux),
         .Done(Done),
         .Error(Err),
         .product(product)

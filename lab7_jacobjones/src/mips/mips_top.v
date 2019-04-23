@@ -2,6 +2,8 @@ module mips_top (
         input  wire        clk,
         input  wire        rst,
         input  wire [4:0]  ra3,
+        input  wire [3:0]  gpi0_in,
+        input  wire [3:0]  gpi1_in,
         output wire        we_dm,
         output wire [31:0] pc_current,
         output wire [31:0] instr,
@@ -13,14 +15,10 @@ module mips_top (
         output wire [4:0] rf_wa
     );
 
-    // Move to input 
     wire [31:0] gpi0;
     wire [31:0] gpi1;
-    //TEST
-    reg [3:0] test_gpi0 = 4'b1010;
-    reg [3:0] test_gpi1 = 4'b0101;
-    assign gpi0 = {28'b0, test_gpi0};
-    assign gpi1 = {28'b0, test_gpi1};
+    assign gpi0 = {28'b0, gpi0_in};
+    assign gpi1 = {28'b0, gpi1_in};
 
     wire [31:0] DONT_USE;
     wire WE1;

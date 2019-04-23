@@ -3,7 +3,7 @@ module factorial #(parameter DATA_WIDTH = 32)(
     input Go,
     input wire [DATA_WIDTH-1:0] n,
     output wire Done, Error,
-    output [DATA_WIDTH*DATA_WIDTH-1:0] product
+    output [DATA_WIDTH-1:0] product
     
 );
 

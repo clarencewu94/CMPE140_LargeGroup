@@ -9,6 +9,7 @@ module tb_system;
 
     // For Testing
     wire [31:0] pc_current = DUT.pc_current;
+    wire done = DUT.mips_top.factorial_accelerator.Done;
 
 
     integer error_count = 0;

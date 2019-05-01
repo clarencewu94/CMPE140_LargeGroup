@@ -9,7 +9,13 @@ module tb_system;
 
     // For Testing
     wire [31:0] pc_current = DUT.pc_current;
+    wire [3:0] n_out = DUT.mips_top.factorial_accelerator.n_out;
     wire done = DUT.mips_top.factorial_accelerator.Done;
+    wire [31:0] product = DUT.mips_top.factorial_accelerator.product;
+    wire dmem_we = DUT.mips_top.dmem.we;
+    wire [5:0] dmem_addr = DUT.mips_top.dmem.a;
+    wire [31:0] dmem_data = DUT.mips_top.dmem.d;
+
 
 
     integer error_count = 0;

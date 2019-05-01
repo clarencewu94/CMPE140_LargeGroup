@@ -68,7 +68,7 @@ module datapath_pipelined (
     wire [PIPE_MEMORY_SIZE-1:0] pipe_memory_in, pipe_memory_out;
     wire [PIPE_WRITEBACK_SIZE-1:0] pipe_writeback_in, pipe_writeback_out;
 
-    assign pipe_fetch_in = {pc_plus4, jta,reg_jump, jump, instr};
+    assign pipe_fetch_in = {pc_plus4, jta, reg_jump, jump, instr};
     // assign pipe_fetch_out = {};
     assign pipe_decode_in = {};
     assign pipe_decode_out = {};

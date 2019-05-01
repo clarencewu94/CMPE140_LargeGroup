@@ -1,4 +1,4 @@
-module tb_system;
+module tb_system_pipeline;
 
     reg         clk;
     reg         rst;
@@ -9,14 +9,12 @@ module tb_system;
 
     // For Testing
     wire [31:0] pc_current = DUT.pc_current;
-    wire go = DUT.mips_top.factorial_accelerator.GoPulseOut;
-    wire [3:0] n_out = DUT.mips_top.factorial_accelerator.n_out;
-    wire done = DUT.mips_top.factorial_accelerator.Done;
-    wire err = DUT.mips_top.factorial_accelerator.Err;
-    wire [31:0] product = DUT.mips_top.factorial_accelerator.product;
-    wire dmem_we = DUT.mips_top.dmem.we;
-    wire [5:0] dmem_addr = DUT.mips_top.dmem.a;
-    wire [31:0] dmem_data = DUT.mips_top.dmem.d;
+    // wire [3:0] n_out = DUT.mips_top.factorial_accelerator.n_out;
+    // wire done = DUT.mips_top.factorial_accelerator.Done;
+    // wire [31:0] product = DUT.mips_top.factorial_accelerator.product;
+    // wire dmem_we = DUT.mips_top.dmem.we;
+    // wire [5:0] dmem_addr = DUT.mips_top.dmem.a;
+    // wire [31:0] dmem_data = DUT.mips_top.dmem.d;
 
 
 
@@ -49,10 +47,10 @@ module tb_system;
 
     initial begin
         reset;
-        gpi0 = 32'b0101;
-        gpi1 = 32'b0110;
+        gpi0 = 32'b0000;
+        gpi1 = 32'b0000;
         // run_test;
-        while(pc_current != 32'h100) 
+        while(pc_current != 32'h58) 
         begin
             tick;
         end

@@ -41,7 +41,6 @@ begin
 	wd_dm_E 	<= 0;
 	sext_imm_E 	<= 0;
 	pc_plus4_E  <= 0;
-	rd1out_E    <= 0;
 	
 	//CONTROL UNIT
 	we_hilo_E 		<= 0;
@@ -63,7 +62,6 @@ begin
 	wd_dm_E 	<= wd_dm_D;
 	sext_imm_E 	<= sext_imm_D;
 	pc_plus4_E  <= pc_plus4_D;
-	rd1out_E    <= rd1out_D;
 	
 	//CONTROL UNIT
 	we_hilo_E 		<= we_hilo;

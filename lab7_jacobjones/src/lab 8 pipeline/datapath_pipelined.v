@@ -67,6 +67,9 @@ module datapath_pipelined (
         wire jump_WB;
         wire dm2reg_WB;
         wire pc_src_WB;
+        wire rd_dm_WB;
+        wire hilo_mux_out_WB;
+        wire pc_plus4_WB;
 
     wire [4:0]  reg_addr;
     // wire [4:0]  rf_wa;
@@ -120,7 +123,7 @@ module datapath_pipelined (
         );
 
     adder pc_plus_br (
-            .a              (pc_plus4),
+            .a              (pc_plus4_E),
             .b              (ba),
             .y              (bta)
         );
@@ -176,14 +179,14 @@ module datapath_pipelined (
 
     signext se (
             .a              (instr[15:0]),
-            .y              (sext_imm)
+            .y              (sext_imm_D)
         );
 
     // --- ALU Logic --- //
     mux2 #(32) alu_pb_mux (
             .sel            (alu_src_E),
-            .a              (wd_dm),
-            .b              (sext_imm),
+            .a              (wd_dm_E),
+            .b              (sext_imm_E),
             .y              (alu_pb)
         );
     
@@ -209,8 +212,8 @@ module datapath_pipelined (
             .op             (alu_ctrl_E),
             .a              (alu_pa),
             .b              (alu_pb),
-            .zero           (zero),
-            .y              (alu_out),
+            .zero           (zero_E),
+            .y              (alu_out_E),
             .y_hi           (alu_out_hi)
         );
 
@@ -218,25 +221,25 @@ module datapath_pipelined (
     mux2 #(32) alu_mem_mux (
             .sel            (dm2reg_WB),
             .a              (alu_mux_out),
-            .b              (rd_dm),
+            .b              (rd_dm_WB),
             .y              (alu_mem_out)
         );
 
     mux2 #(32) rf_wd_mux (
             .sel            (jal_WB),
             .a              (alu_mem_out),
-            .b              (pc_plus4),
+            .b              (pc_plus4_WB),
             .y              (wd_rf)
         );
 
     // HiLo Register & logic
     assign {hi_q, lo_q} = hilo_q;
-    assign hilo_d = {alu_out_hi, alu_out};
+    assign hilo_d_E = {alu_out_hi, alu_out};
     flopenr #(64) hilo_reg (
         .clk    (clk),
         .reset  (rst),
         .en     (we_hilo_M),
-        .d      (hilo_d),
+        .d      (hilo_d_M),
         .q      (hilo_q)
     );
 
@@ -250,14 +253,10 @@ module datapath_pipelined (
     mux2 #(32) alu_out_mux (
         .sel    (alu_out_sel_WB),
         .a      (alu_out),
-        .b      (hilo_mux_out),
+        .b      (hilo_mux_out_WB),
         .y    (alu_mux_out)
     );
 
- //Pipelining
- fetch2decode(
-
- );
  
 decode2execute decode2execute(
     .clk            (clk),
@@ -283,7 +282,7 @@ decode2execute decode2execute(
     .reg_jump       (reg_jump),
     .jump           (jump),
     .dm2reg         (dm2reg),
-    .we_dm_D        (we_dm_D),
+    .we_dm          (we_dm_D),
     .branch         (branch),
     .alu_src        (alu_src),
     .alu_ctrl       (alu_ctrl),
@@ -299,8 +298,6 @@ decode2execute decode2execute(
     .we_dm_E        (we_dm_E),
     .branch_E       (branch_E),
     .alu_src_E      (alu_src_E),
-    .reg_dst        (reg_dst),
-    .we_reg         (we_reg),
     .alu_ctrl_E     (alu_ctrl_E)
 );
  
@@ -350,7 +347,7 @@ memory2writeback(
     .dm2reg_M       (dm2reg_M),
     .pc_src         (pc_src),
     .rd_dm          (rd_dm),
-    .hilo_sel_out   (hilo_sel_out),
+    .hilo_mux_out   (hilo_mux_out),
     .rst            (rst),
     .clk            (clk),
 
@@ -359,6 +356,8 @@ memory2writeback(
     .reg_jump_WB    (reg_jump_WB),
     .jump_WB        (jump_WB),
     .dm2reg_WB      (dm2reg_WB),
-    .pc_src_WB      (pc_src_WB)
+    .pc_src_WB      (pc_src_WB),
+    .rd_dm_WB       (rd_dm_WB),
+    .hilo_mux_out_WB    (hilo_mux_out_WB)
 );
 endmodule

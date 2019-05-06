@@ -28,6 +28,12 @@ module datapath_pipelined (
         output wire we_dm_M
     );
 
+        // we_reg edit
+        wire we_reg_E, we_reg_M, we_reg_WB;
+
+        //rf edit
+        wire [4:0] rf_wa_E, rf_wa_M, rf_wa_WB;
+
         //clarence edit
         // wire we_dm_D;
          wire zero_E;        
@@ -35,7 +41,7 @@ module datapath_pipelined (
        wire [63:0] hilo_d_E; 
     
        wire zero_M;        
-        wire pc_plus4_M;     
+        wire [31:0] pc_plus4_M;     
         wire [31:0] alu_out_M;      
         wire [31:0] alu_out_WB;      
         wire [31:0] wd_dm_M;       
@@ -73,7 +79,7 @@ module datapath_pipelined (
         wire pc_src_WB;
         wire [31:0] rd_dm_WB;
         wire [31:0] hilo_mux_out_WB;
-        wire pc_plus4_WB;
+        wire [31:0] pc_plus4_WB;
 
     wire [4:0]  reg_addr;
     // wire [4:0]  rf_wa;
@@ -108,7 +114,7 @@ module datapath_pipelined (
     // wire [31:0] shift_mul_mux_out;
     wire [4:0] shift_rd1_out;
     
-    assign pc_src = branch_M & zero_M;
+    assign pc_src = branch_E & zero_E;
     assign ba = {sext_imm[29:0], 2'b00};
     assign jta = {pc_plus4[31:28], instr[25:0], 2'b00};
     
@@ -133,21 +139,21 @@ module datapath_pipelined (
         );
 
     mux2 #(32) pc_reg_jmp_mux (
-            .sel            (reg_jump_WB), //change to reg_jump_WB
+            .sel            (reg_jump), //change to reg_jump_WB
             .a              (pc_plus4),
             .b              (rd1_out),
             .y              (pc_rj_plus4)
         );
 
     mux2 #(32) pc_src_mux (
-            .sel            (pc_src_WB),
+            .sel            (pc_src),
             .a              (pc_rj_plus4), // pc_pre
             .b              (bta), //
             .y              (pc_pre_WB)
         );
 
     mux2 #(32) pc_jmp_mux (
-            .sel            (jump_WB),
+            .sel            (jump),
             .a              (pc_pre_WB),
             .b              (jta),
             .y              (pc_next)//pc jump + 4 on diagram
@@ -162,7 +168,7 @@ module datapath_pipelined (
         );
 
     mux2 #(5) reg_addr_mux (
-            .sel            (reg_jump_E),
+            .sel            (reg_jump),
             .a              (reg_addr),
             .b              (5'h1F),    //11111
             .y              (rf_wa)
@@ -170,11 +176,11 @@ module datapath_pipelined (
 
     regfile rf (
             .clk            (clk),
-            .we             (we_reg),
+            .we             (we_reg_WB),
             .ra1            (instr[25:21]),
             .ra2            (instr[20:16]),
             .ra3            (ra3),
-            .wa             (rf_wa),
+            .wa             (rf_wa_WB),
             .wd             (wd_rf),
             .rd1            (rd1_out),
             .rd2            (wd_dm),
@@ -269,13 +275,14 @@ decode2execute decode2execute(
     .wd_dm_D        (wd_dm),
     .sext_imm_D     (sext_imm_D),    
     .pc_plus4_D     (pc_plus4),
+    .rf_wa          (rf_wa),
     
 
     .rd1out_E       (rd1out_E), 
     .wd_dm_E        (wd_dm_E),
     .sext_imm_E     (sext_imm_E),
     .pc_plus4_E     (pc_plus4_E),
-    
+    .rf_wa_E        (rf_wa_E),
     
     //control unit signals
     .we_hilo        (we_hilo),
@@ -290,6 +297,7 @@ decode2execute decode2execute(
     .branch         (branch),
     .alu_src        (alu_src),
     .alu_ctrl       (alu_ctrl),
+    .we_reg         (we_reg),
     
     .we_hilo_E      (we_hilo_E),
     .alu_out_sel_E  (alu_out_sel_E),
@@ -302,7 +310,9 @@ decode2execute decode2execute(
     .we_dm_E        (we_dm_E),
     .branch_E       (branch_E),
     .alu_src_E      (alu_src_E),
-    .alu_ctrl_E     (alu_ctrl_E)
+    .alu_ctrl_E     (alu_ctrl_E),
+    .we_reg_E       (we_reg_E)
+
 );
  
 execute2memory execute2memory(
@@ -312,14 +322,15 @@ execute2memory execute2memory(
     .pc_plus4_E     (pc_plus4_E),
     .alu_out      (alu_out),
     .wd_dm_E        (wd_dm_E), 
-    .hilo_d_E       (hilo_d_E), 
+    .hilo_d_E       (hilo_d_E),
+    .rf_wa_E          (rf_wa_E),
 
     .zero_M         (zero_M),
     .pc_plus4_M     (pc_plus4_M),
     .alu_out_M      (alu_out_M), 
     .wd_dm_M        (wd_dm_M),
     .hilo_d_M       (hilo_d_M),
-        
+    .rf_wa_M        (rf_wa_M),
     
     //control unit signals
     .we_hilo_E      (we_hilo_E), 
@@ -331,7 +342,8 @@ execute2memory execute2memory(
     .dm2reg_E       (dm2reg_E),
     .we_dm_E        (we_dm_E),
     .branch_E       (branch_E),
-        
+    .we_reg_E       (we_reg_E),
+
     .we_hilo_M      (we_hilo_M),
     .alu_out_sel_M  (alu_out_sel_M),
     .jal_M          (jal_M),
@@ -340,7 +352,8 @@ execute2memory execute2memory(
     .jump_M         (jump_M),
     .dm2reg_M       (dm2reg_M),
     .we_dm_M        (we_dm_M),
-    .branch_M       (branch_M)
+    .branch_M       (branch_M),
+    .we_reg_M       (we_reg_M)
 );
  
 memory2writeback memory2writeback(
@@ -352,10 +365,14 @@ memory2writeback memory2writeback(
     .hilo_mux_out   (hilo_mux_out),
     .rd_dm          (rd_dm),
     .alu_out_M      (alu_out_M), 
+    .rf_wa_M        (rf_wa_M),
+    .pc_plus4_M     (pc_plus4_M),
         // out
     .rd_dm_WB       (rd_dm_WB),
     .hilo_mux_out_WB    (hilo_mux_out_WB),
     .alu_out_WB      (alu_out_WB), 
+    .rf_wa_WB        (rf_wa_WB),
+    .pc_plus4_WB    (pc_plus4_WB),
 
     // cu
         // in 
@@ -365,13 +382,14 @@ memory2writeback memory2writeback(
     .jump_M         (jump_M),
     .dm2reg_M       (dm2reg_M),
     .pc_src         (pc_src),
+    .we_reg_M       (we_reg_M),
         // out
     .alu_out_sel_WB (alu_out_sel_WB),
     .jal_WB         (jal_WB),
     .reg_jump_WB    (reg_jump_WB),
     .jump_WB        (jump_WB),
     .dm2reg_WB      (dm2reg_WB),
-    .pc_src_WB      (pc_src_WB)
-
+    .pc_src_WB      (pc_src_WB),
+    .we_reg_WB       (we_reg_WB)
 );
 endmodule

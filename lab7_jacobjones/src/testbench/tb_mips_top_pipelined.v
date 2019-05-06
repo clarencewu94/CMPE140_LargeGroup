@@ -27,6 +27,7 @@ module tb_mips_top_pipelined;
     wire [31:0]  wd_dm_E = DUT.mips.dp.wd_dm_E;
     wire [31:0]  sext_imm_E = DUT.mips.dp.sext_imm_E;
     wire [31:0]  pc_plus4_E = DUT.mips.dp.pc_plus4_E;
+    wire [4:0]  rf_wa_E = DUT.mips.dp.rf_wa_E;
         // -- cu -- //
     wire we_hilo = DUT.mips.dp.we_hilo;
     wire alu_out_sel = DUT.mips.dp.alu_out_sel;
@@ -41,6 +42,7 @@ module tb_mips_top_pipelined;
     wire branch = DUT.mips.dp.branch;
     wire alu_src = DUT.mips.dp.alu_src;
     wire [2:0] alu_ctrl = DUT.mips.dp.alu_ctrl;
+    wire we_reg = DUT.mips.dp.we_reg;
     wire we_hilo_E = DUT.mips.dp.we_hilo_E;
     wire alu_out_sel_E = DUT.mips.dp.alu_out_sel_E;
     wire shift_mux_sel_E = DUT.mips.dp.shift_mux_sel_E;
@@ -53,6 +55,7 @@ module tb_mips_top_pipelined;
     wire branch_E = DUT.mips.dp.branch_E;
     wire alu_src_E = DUT.mips.dp.alu_src_E;
     wire [2:0] alu_ctrl_E = DUT.mips.dp.alu_ctrl_E;
+    wire we_reg_E = DUT.mips.dp.we_reg_E;
     // --- E2M --- //
         // -- data -- //
     wire [31:0]  alu_pa = DUT.mips.dp.alu_pa;
@@ -61,6 +64,8 @@ module tb_mips_top_pipelined;
     wire [31:0]  alu_out_M = DUT.mips.dp.alu_out_M;
     wire [63:0]  hilo_d_E = DUT.mips.dp.hilo_d_E;
     wire [63:0]  hilo_d_M = DUT.mips.dp.hilo_d_M;
+    wire [4:0]   rf_wa_M = DUT.mips.dp.rf_wa_M;
+    wire [31:0]  pc_plus4_M = DUT.mips.dp.pc_plus4_M;
         // -- cu -- //
     wire zero_E = DUT.mips.dp.zero_E;
     wire zero_M = DUT.mips.dp.zero_M;
@@ -73,11 +78,14 @@ module tb_mips_top_pipelined;
     wire [1:0] dm2reg_M = DUT.mips.dp.dm2reg_M;
     wire we_dm_M = DUT.mips.dp.we_dm_M;
     wire branch_M = DUT.mips.dp.branch_M;
+    wire we_reg_M = DUT.mips.dp.we_reg_M;
     // --- M2W --- //
         // -- data -- //
     wire [31:0]  hilo_mux_out_WB = DUT.mips.dp.hilo_mux_out_WB;
     wire [31:0]  rd_dm_WB = DUT.mips.dp.rd_dm_WB;
     wire [31:0]  alu_out_WB = DUT.mips.dp.alu_out_WB;
+    wire [4:0]   rf_wa_WB = DUT.mips.dp.rf_wa_WB;
+    wire [31:0]  pc_plus4_WB = DUT.mips.dp.pc_plus4_WB;
         // -- cu -- //
     wire pc_src = DUT.mips.dp.pc_src;
     wire pc_src_WB = DUT.mips.dp.pc_src_WB;
@@ -86,6 +94,7 @@ module tb_mips_top_pipelined;
     wire reg_jump_WB = DUT.mips.dp.reg_jump_WB;
     wire jump_WB = DUT.mips.dp.jump_WB;
     wire [1:0] dm2reg_WB = DUT.mips.dp.dm2reg_WB;
+    wire we_reg_WB = DUT.mips.dp.we_reg_WB;
 
     // // Original
     // wire shift_mux_sel = DUT.mips.shift_mux_sel;
@@ -280,7 +289,7 @@ module tb_mips_top_pipelined;
         gpi0 = 32'b1010;
         gpi1 = 32'b0110;
         // run_test;
-        while(pc_current != 32'h58) 
+        while(pc_current != 32'h90) 
         begin
             tick;
         end

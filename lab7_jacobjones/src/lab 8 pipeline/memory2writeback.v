@@ -3,7 +3,7 @@ module memory2writeback (
 	input wire jal_M,
 	input wire reg_jump_M,
 	input wire jump_M,
-	input wire dm2reg_M,
+	input wire [1:0] dm2reg_M,
 	input wire pc_src,
 	input wire [31:0] rd_dm,
 	input wire [31:0] hilo_mux_out,
@@ -14,11 +14,11 @@ module memory2writeback (
 	output reg jal_WB,
 	output reg reg_jump_WB,
 	output reg jump_WB,
-	output reg dm2reg_WB,
+	output reg [1:0] dm2reg_WB,
 	output reg pc_src_WB,
 	output reg [31:0] rd_dm_WB,
 	output reg [31:0] hilo_mux_out_WB,
-    output wire [31:0] alu_out_WB
+    output reg [31:0] alu_out_WB
 );
 
 always @(posedge clk, posedge rst) 
@@ -33,6 +33,7 @@ always @(posedge clk, posedge rst)
                 pc_src_WB 			<= 0;
                 rd_dm_WB 			<= 0;
                 hilo_mux_out_WB       <=0;
+                alu_out_WB <= 0;
             end
         else
             begin
@@ -44,7 +45,7 @@ always @(posedge clk, posedge rst)
                 pc_src_WB       <=	pc_src;
                 rd_dm_WB 		<= 	rd_dm;
                 hilo_mux_out_WB  <= hilo_mux_out;
-                
+                alu_out_WB <= alu_out_M;
             end   
     end
 endmodule

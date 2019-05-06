@@ -1,14 +1,16 @@
 module execute2memory(
 	input wire clk, rst,
 	input wire zero_E,
-	input wire pc_plus4_E,
+	input wire [31:0] pc_plus4_E,
 	input wire [31:0] alu_out, wd_dm_E, 
 	input wire [63:0] hilo_d_E, 
+	input wire [4:0] rf_wa_E,
 
-	output reg 	zero_M,	pc_plus4_M,
+	output reg 	zero_M,	
+	output reg [31:0] pc_plus4_M,
 	output reg [31:0]	alu_out_M,	wd_dm_M,
 	output reg [63:0]	hilo_d_M,
-		
+	output reg [4:0] rf_wa_M,
 
 	input wire dm2reg_E,
 	output reg dm2reg_M,
@@ -23,6 +25,7 @@ module execute2memory(
 		jump_E,
 		we_dm_E,
 		branch_E,
+		we_reg_E,
 		
 	
 	output reg 
@@ -33,7 +36,8 @@ module execute2memory(
 		reg_jump_M,
 		jump_M,
 		we_dm_M,
-		branch_M
+		branch_M,
+		we_reg_M
 		
 );
 	always @ (posedge clk, rst) 
@@ -46,6 +50,7 @@ module execute2memory(
 			alu_out_M 	<= 0;
 			hilo_d_M 	<= 0;
 			wd_dm_M 	<= 0;
+			rf_wa_M		<= 0;
 			
 			//CU
 			we_hilo_M 		<= 0;
@@ -57,6 +62,7 @@ module execute2memory(
 			dm2reg_M 		<= 0;
 			we_dm_M 		<= 0;
 			branch_M 		<= 0;
+			we_reg_M		<= 0;
 		end 
 			
 		else
@@ -66,6 +72,7 @@ module execute2memory(
 			alu_out_M 	<= alu_out;
 			hilo_d_M 	<= hilo_d_E;
 			wd_dm_M 	<= wd_dm_E;
+			rf_wa_M		<= rf_wa_E;
 			
 			//CU
 			we_hilo_M 		<= we_hilo_E;
@@ -77,6 +84,7 @@ module execute2memory(
 			dm2reg_M 		<= dm2reg_E;
 			we_dm_M 		<= we_dm_E;
 			branch_M 		<= branch_E;
+			we_reg_M		<= we_reg_E;
 		end
 	end 
 endmodule 	

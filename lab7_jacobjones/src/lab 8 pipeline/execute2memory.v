@@ -2,7 +2,7 @@ module execute2memory(
 	input wire clk, rst,
 	input wire zero_E,
 	input wire pc_plus4_E,
-	input wire [31:0] alu_out_E, wd_dm_E, 
+	input wire [31:0] alu_out, wd_dm_E, 
 	input wire [63:0] hilo_d_E, 
 
 	output reg 	zero_M,	pc_plus4_M,
@@ -62,7 +62,7 @@ module execute2memory(
 		begin 
 			zero_M 		<= zero_E;
 			pc_plus4_M <= pc_plus4_E;
-			alu_out_M 	<= alu_out_E;
+			alu_out_M 	<= alu_out;
 			hilo_d_M 	<= hilo_d_E;
 			wd_dm_M 	<= wd_dm_E;
 			

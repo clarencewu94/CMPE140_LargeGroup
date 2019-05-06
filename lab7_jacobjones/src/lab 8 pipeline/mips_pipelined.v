@@ -25,6 +25,7 @@ module mips_pipelined (
     wire       hilo_sel;
     wire       alu_out_sel;
     wire       shift_mux_sel;
+    wire       we_dm_D;
     wire [2:0] alu_ctrl;
 
     datapath_pipelined dp (
@@ -51,7 +52,10 @@ module mips_pipelined (
             .wd_dm          (wd_dm),
             .rd3            (rd3),
             .wd_rf          (wd_rf),
-            .rf_wa          (rf_wa)
+            .rf_wa          (rf_wa),
+
+            .we_dm_D(we_dm_D),
+            .we_dm_M(we_dm)
         );
 
     controlunit cu (
@@ -64,7 +68,7 @@ module mips_pipelined (
             .reg_dst        (reg_dst),
             .we_reg         (we_reg),
             .alu_src        (alu_src),
-            .we_dm          (we_dm),
+            .we_dm          (we_dm_D),
             .dm2reg         (dm2reg),
             .hilo_sel       (hilo_sel),
             .alu_out_sel    (alu_out_sel),

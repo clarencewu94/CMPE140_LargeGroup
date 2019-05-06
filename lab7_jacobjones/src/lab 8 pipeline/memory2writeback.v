@@ -7,6 +7,7 @@ module memory2writeback (
 	input wire pc_src,
 	input wire [31:0] rd_dm,
 	input wire [31:0] hilo_mux_out,
+    input wire [31:0] alu_out_M,
 	input wire rst, clk,
 
 	output reg alu_out_sel_WB,
@@ -16,8 +17,8 @@ module memory2writeback (
 	output reg dm2reg_WB,
 	output reg pc_src_WB,
 	output reg [31:0] rd_dm_WB,
-	output reg [31:0] hilo_mux_out_WB
-
+	output reg [31:0] hilo_mux_out_WB,
+    output wire [31:0] alu_out_WB
 );
 
 always @(posedge clk, posedge rst) 

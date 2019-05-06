@@ -9,6 +9,10 @@
     addi $t7, $zero, $zero # nop
     addi	$t1, $zero, 2			# $t0 = $t1 + 0
     addi $t7, $zero, $zero # nop
+    jal 0x38
+    addi $t7, $zero, $zero # nop
+    addi	$t1, $zero, 2			# $t0 = $t1 + 0
+    addi $t7, $zero, $zero # nop
     addi	$t0, $zero, 0x1			# $t0 = $t1 + 0
     addi	$t1, $zero, 0x2			# $t0 = $t1 + 0
     add  $t2, $t1, $t0

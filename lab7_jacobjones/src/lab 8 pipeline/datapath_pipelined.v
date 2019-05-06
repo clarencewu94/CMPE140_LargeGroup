@@ -52,7 +52,7 @@ module datapath_pipelined (
         wire dm2reg_E;
         wire we_dm_E;
         wire branch_E;
-        wire alu_ctrl_E;
+        wire [2:0] alu_ctrl_E;
         wire alu_src_E;
 
         wire we_hilo_M;

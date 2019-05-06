@@ -35,12 +35,12 @@ module tb_mips_top_pipelined;
     wire hilo_sel = DUT.mips.dp.hilo_sel;
     wire reg_jump = DUT.mips.dp.reg_jump;
     wire jump = DUT.mips.dp.jump;
-    wire dm2reg = DUT.mips.dp.dm2reg;
+    wire [1:0] dm2reg = DUT.mips.dp.dm2reg;
     wire we_dm_D = DUT.mips.dp.we_dm_D;
     // wire we_dm = DUT.mips.dp.we_dm; // From mips_top
     wire branch = DUT.mips.dp.branch;
     wire alu_src = DUT.mips.dp.alu_src;
-    wire alu_ctrl = DUT.mips.dp.alu_ctrl;
+    wire [2:0] alu_ctrl = DUT.mips.dp.alu_ctrl;
     wire we_hilo_E = DUT.mips.dp.we_hilo_E;
     wire alu_out_sel_E = DUT.mips.dp.alu_out_sel_E;
     wire shift_mux_sel_E = DUT.mips.dp.shift_mux_sel_E;
@@ -48,11 +48,11 @@ module tb_mips_top_pipelined;
     wire hilo_sel_E = DUT.mips.dp.hilo_sel_E;
     wire reg_jump_E = DUT.mips.dp.reg_jump_E;
     wire jump_E = DUT.mips.dp.jump_E;
-    wire dm2reg_E = DUT.mips.dp.dm2reg_E;
+    wire [1:0] dm2reg_E = DUT.mips.dp.dm2reg_E;
     wire we_dm_E = DUT.mips.dp.we_dm_E;
     wire branch_E = DUT.mips.dp.branch_E;
     wire alu_src_E = DUT.mips.dp.alu_src_E;
-    wire alu_ctrl_E = DUT.mips.dp.alu_ctrl_E;
+    wire [2:0] alu_ctrl_E = DUT.mips.dp.alu_ctrl_E;
     // --- E2M --- //
         // -- data -- //
     wire [31:0]  alu_pa = DUT.mips.dp.alu_pa;
@@ -70,7 +70,7 @@ module tb_mips_top_pipelined;
     wire hilo_sel_M = DUT.mips.dp.hilo_sel_M;
     wire reg_jump_M = DUT.mips.dp.reg_jump_M;
     wire jump_M = DUT.mips.dp.jump_M;
-    wire dm2reg_M = DUT.mips.dp.dm2reg_M;
+    wire [1:0] dm2reg_M = DUT.mips.dp.dm2reg_M;
     wire we_dm_M = DUT.mips.dp.we_dm_M;
     wire branch_M = DUT.mips.dp.branch_M;
     // --- M2W --- //
@@ -85,7 +85,7 @@ module tb_mips_top_pipelined;
     wire jal_WB = DUT.mips.dp.jal_WB;
     wire reg_jump_WB = DUT.mips.dp.reg_jump_WB;
     wire jump_WB = DUT.mips.dp.jump_WB;
-    wire dm2reg_WB = DUT.mips.dp.dm2reg_WB;
+    wire [1:0] dm2reg_WB = DUT.mips.dp.dm2reg_WB;
 
     // // Original
     // wire shift_mux_sel = DUT.mips.shift_mux_sel;

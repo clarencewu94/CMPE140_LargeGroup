@@ -9,6 +9,9 @@ module execute2memory(
 	output reg [31:0]	alu_out_M,	wd_dm_M,
 	output reg [63:0]	hilo_d_M,
 		
+
+	input wire [1:0] dm2reg_E,
+	output reg [1:0] dm2reg_M,
 	
 	//control unit signals
 	input wire 
@@ -18,7 +21,6 @@ module execute2memory(
 		hilo_sel_E,
 		reg_jump_E,
 		jump_E,
-		dm2reg_E,
 		we_dm_E,
 		branch_E,
 		
@@ -30,7 +32,6 @@ module execute2memory(
 		hilo_sel_M,
 		reg_jump_M,
 		jump_M,
-		dm2reg_M,
 		we_dm_M,
 		branch_M
 		

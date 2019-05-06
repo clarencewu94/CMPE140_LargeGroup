@@ -28,11 +28,11 @@ module decode2execute(
 	
 	//control unit signals
 	input wire we_hilo, alu_out_sel, shift_mux_sel, jal, hilo_sel, reg_jump, jump, we_dm, branch, alu_src,
-	input wire [1:0] dm2reg,
+	input wire dm2reg,
 	input wire [2:0] alu_ctrl,
 	
 	output reg we_hilo_E, alu_out_sel_E, shift_mux_sel_E, jal_E, hilo_sel_E, reg_jump_E, jump_E, we_dm_E, branch_E, alu_src_E,
-	output reg [1:0] dm2reg_E,
+	output reg dm2reg_E,
 	output reg [2:0] alu_ctrl_E
 );
 

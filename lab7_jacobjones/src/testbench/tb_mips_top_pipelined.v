@@ -19,10 +19,10 @@ module tb_mips_top_pipelined;
     // Debug
     // --- D2E --- //
         // -- data -- //
-    wire [31:0]  rd1out_D = DUT.mips.dp.rd1out_D;
-    wire [31:0]  wd_dm_D = DUT.mips.dp.wd_dm_D;
+    wire [31:0]  rd1_out = DUT.mips.dp.rd1_out;
+    wire [31:0]  wd_dm2 = DUT.mips.dp.wd_dm;
     wire [31:0]  sext_imm_D = DUT.mips.dp.sext_imm_D;
-    wire [31:0]  pc_plus4_D = DUT.mips.dp.pc_plus4_D;
+    wire [31:0]  pc_plus4 = DUT.mips.dp.pc_plus4;
     wire [31:0]  rd1out_E = DUT.mips.dp.rd1out_E;
     wire [31:0]  wd_dm_E = DUT.mips.dp.wd_dm_E;
     wire [31:0]  sext_imm_E = DUT.mips.dp.sext_imm_E;

@@ -8,7 +8,7 @@ module datapath_pipelined (
         input  wire        reg_dst,
         input  wire        we_reg,
         input  wire        alu_src,
-        input  wire [1:0]  dm2reg,
+        input  wire        dm2reg,
         input  wire        we_hilo,
         input  wire        alu_out_sel,
         input  wire        hilo_sel,
@@ -90,10 +90,10 @@ module datapath_pipelined (
     wire [31:0] alu_pa;
     wire [31:0] alu_pb;
     wire [31:0] alu_mem_out;
-    wire [31:0] rd1out_D;
-    wire [31:0] wd_dm_D;
+    // wire [31:0] rd1out_D;
+    // wire [31:0] wd_dm_D;
     wire [31:0] sext_imm_D;    
-    wire [31:0] pc_plus4_D;
+    // wire [31:0] pc_plus4_D;
     wire [31:0] rd1out_E;
     wire [31:0] wd_dm_E;
     wire [31:0] sext_imm_E;    
@@ -265,10 +265,10 @@ module datapath_pipelined (
 decode2execute decode2execute(
     .clk            (clk),
     .rst            (rst),
-    .rd1out_D       (rd1out_D),
-    .wd_dm_D        (wd_dm_D),
+    .rd1out_D       (rd1_out),
+    .wd_dm_D        (wd_dm),
     .sext_imm_D     (sext_imm_D),    
-    .pc_plus4_D     (pc_plus4_D),
+    .pc_plus4_D     (pc_plus4),
     
 
     .rd1out_E       (rd1out_E), 

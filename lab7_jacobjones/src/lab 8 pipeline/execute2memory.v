@@ -10,8 +10,8 @@ module execute2memory(
 	output reg [63:0]	hilo_d_M,
 		
 
-	input wire [1:0] dm2reg_E,
-	output reg [1:0] dm2reg_M,
+	input wire dm2reg_E,
+	output reg dm2reg_M,
 	
 	//control unit signals
 	input wire 

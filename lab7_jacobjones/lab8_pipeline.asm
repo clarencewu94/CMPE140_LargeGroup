@@ -1,15 +1,16 @@
     addi $t7, $zero, $zero # nop
-    addi	$t0, $zero, 0x14			# $t0 = $t1 + 0
+    addi	$t0, $zero, 0x2c			# $t0 = $t1 + 0
     addi $t7, $zero, $zero # nop
-    jr		$t0					# jump to $ra
+    j 0x1c
+    addi $t7, $zero, $zero # nop
     addi $t7, $zero, $zero # nop
     addi	$t1, $zero, 1			# $t0 = $t1 + 0
     addi $t7, $zero, $zero # nop
-    j 0x28
+    jr		$t0					# jump to $ra
     addi $t7, $zero, $zero # nop
     addi	$t1, $zero, 2			# $t0 = $t1 + 0
     addi $t7, $zero, $zero # nop
-    jal 0x38
+    jal 0x3c
     addi $t7, $zero, $zero # nop
     addi	$t1, $zero, 2			# $t0 = $t1 + 0
     addi $t7, $zero, $zero # nop

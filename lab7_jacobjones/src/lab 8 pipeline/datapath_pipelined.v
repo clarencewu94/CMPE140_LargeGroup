@@ -17,12 +17,12 @@ module datapath_pipelined (
         input  wire [4:0]  ra3,
         input  wire [31:0] instr,
         input  wire [31:0] rd_dm,
-        output reg [31:0] pc_current,
-        output reg [31:0] alu_mux_out,
-        output reg [31:0] wd_dm,
-        output reg [31:0] rd3,
-        output reg [31:0] wd_rf,
-        output reg [4:0] rf_wa
+        output wire [31:0] pc_current,
+        output wire [31:0] alu_mux_out,
+        output wire [31:0] wd_dm,
+        output wire [31:0] rd3,
+        output wire [31:0] wd_rf,
+        output wire [4:0] rf_wa
     );
 
         //clarence edit
@@ -301,7 +301,7 @@ decode2execute decode2execute(
     .alu_ctrl_E     (alu_ctrl_E)
 );
  
-execute2memory(
+execute2memory execute2memory(
     .clk            (clk),
     .rst            (rst),
     .zero_E         (zero_E),
@@ -339,7 +339,7 @@ execute2memory(
     .branch_M       (branch_M)
 );
  
-memory2writeback(
+memory2writeback memory2writeback(
     .alu_out_sel_M  (alu_out_sel_M),
     .jal_M          (jal_M),
     .reg_jump_M     (reg_jump_M),

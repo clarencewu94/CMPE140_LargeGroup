@@ -1,4 +1,4 @@
-module mips_top (
+module mips_top_pipelined (
         input  wire        clk,
         input  wire        rst,
         input  wire [4:0]  ra3,
@@ -33,7 +33,7 @@ module mips_top (
 
 
 
-    mips mips (
+    mips_pipelined mips (
             .clk            (clk),
             .rst            (rst),
             .ra3            (ra3),
@@ -48,7 +48,7 @@ module mips_top (
             .rf_wa          (rf_wa)
         );
 
-    imem imem (
+    imem_pipelined imem (
             .a              (pc_current[7:2]),
             .y              (instr)
         );

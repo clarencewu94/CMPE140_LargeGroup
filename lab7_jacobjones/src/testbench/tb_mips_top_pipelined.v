@@ -1,4 +1,4 @@
-module tb_mips_top;
+module tb_mips_top_pipelined;
 
     reg         clk;
     reg         rst;
@@ -78,7 +78,7 @@ module tb_mips_top;
     integer reg1_value;
 
     
-    mips_top DUT (
+    mips_top_pipelined DUT (
             .clk            (clk),
             .rst            (rst),
             .we_dm          (we_dm),

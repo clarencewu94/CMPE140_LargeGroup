@@ -3,10 +3,10 @@
 module fetch2decode(
     input wire clk,
 	input wire rst,
-	input wire imem,
+	input wire [31:0] imem,
 	input wire  pc_plus4,
 
-    output reg imem_D,
+	output reg [31:0] imem_D,
     output reg  pc_plus4_D
 );
 always @ (posedge clk, posedge rst) begin
